@@ -23,7 +23,7 @@ async function fetchAPI() {
     let deathListEl = document.querySelector('.deathList');
     let recoveryListEl = document.querySelector('.recoveryList');
 
-    //convert UTC date to readable date
+    //convert UTC date to better formatted date
     let dateObj = new Date(lastUpdate);
     let options = {
         weekday: "long",
@@ -36,12 +36,12 @@ async function fetchAPI() {
         hour: "numeric", 
         minute: "numeric"
     });
-    dateObj = dateObj.toLocaleDateString('en', options);
+    let formattedDate = dateObj.toLocaleDateString('en', options);
 
     document.querySelector('#totalConfirmed').innerHTML = addCommasToNumbers( totalConfirmed );
     document.querySelector('#totalDeaths').innerHTML = addCommasToNumbers( totalDeaths );
     document.querySelector('#totalRecovered').innerHTML = addCommasToNumbers( totalRecovered );
-    document.querySelector('#lastUpdated').innerHTML += `${time}<br>` + dateObj;
+    document.querySelector('#lastUpdated').innerHTML += `${time} ` + formattedDate;
 
     let loopLength = confirmedLocations.length;
 
@@ -103,7 +103,6 @@ async function fetchAPI() {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiYmFjb25hdG9yNDUiLCJhIjoiY2s3eTV0aTRqMDNlZzNtbnMzajR0dDZiNyJ9.4rvhOofAx_ggGO7ZbxOuTQ'
     }).addTo(mymap);
-    ///END OF MAP
 
     //creates div elements and prints sorted array of objects to divs
     for (let i = 0; i < loopLength; i++ ) {
@@ -114,21 +113,7 @@ async function fetchAPI() {
             confirmedProvince = confirmedArray[i].province,
             confirmedCountry = confirmedArray[i].country,
             latitude = confirmedArray[i].lat,
-            longitude = confirmedArray[i].long;
-
-        //create red circles on map based on latitude and longitude
-        let  circle = L.circle([latitude, longitude], {
-            color: 'red',
-            fillColor: '#f03',
-            fillOpacity: 0.3,
-            radius: 10000 + (confirmedCasesForMap * 20)
-        }).addTo(mymap);
-
-        //binds popups to circles saying the country and how many cases 
-        circle.bindPopup(
-            "Province/Country: " + confirmedProvince + " " + 
-            confirmedCountry + " | Total cases: " + confirmedCasesValue
-        );
+            longitude = confirmedArray[i].long;        
 
         //declare death cases variables
         let deathCasesValue = addCommasToNumbers( deathArray[i].value ),
@@ -140,9 +125,30 @@ async function fetchAPI() {
             recoveredProvince = recoveredArray[i].province;
             recoveredCountry = recoveredArray[i].country;
 
-        let confirmedCountryList = document.createElement("div");
-        let deathCountryList = document.createElement("div");
-        let recoveredCountryList = document.createElement("div");
+        let confirmedCountryList = document.createElement("div"),
+            deathCountryList = document.createElement("div"),
+            recoveredCountryList = document.createElement("div");
+
+        if ( confirmedCasesForMap > 0 ) {
+            //create red circles on map based on latitude and longitude
+            let  circle = L.circle([latitude, longitude], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.3,
+                radius: 10000 + (confirmedCasesForMap * 30)
+        }).addTo(mymap);
+    
+        //binds popups to circles saying the country and how many cases
+        if(confirmedProvince) {
+            circle.bindPopup(
+                `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue} <br> Recoveries: ${recoveredCasesValue}`
+            );
+        } else {
+            circle.bindPopup(
+            `Country: ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue} <br> Recoveries: ${recoveredCasesValue}`
+            );
+        }
+    }
 
         printToHTML(confirmedCasesValue, confirmedProvince, confirmedCountry, confirmedCountryList, confirmedArray[i].value);
         printToHTML(deathCasesValue, deathProvince, deathCountry, deathCountryList, deathArray[i].value);
