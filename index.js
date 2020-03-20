@@ -8,7 +8,7 @@ let confirmedArray = [];
 let deathArray = [];
 let recoveredArray = [];
 
-
+fetchAPI();
 
 async function fetchAPI() {
     const response = await fetch(api);
@@ -135,13 +135,9 @@ async function fetchAPI() {
         }).addTo(mymap);
         
         //binds popups to circles saying the country and how many cases
-        if( confirmedProvince ) {
+        if ( confirmedProvince ) {
             circle.bindPopup(
                 `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue}`
-            );
-        } else if (confirmedProvince && confirmedCountry === deathCountry ) {
-            circle.bindPopup(
-                `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue}`
             );
         } else {
             circle.bindPopup(
@@ -182,5 +178,3 @@ function sortGreatestToLeast( x ) {
 function addCommasToNumbers( x ) {
     return x.toLocaleString();
 }
-
-fetchAPI();
