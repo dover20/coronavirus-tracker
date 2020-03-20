@@ -8,6 +8,8 @@ let confirmedArray = [];
 let deathArray = [];
 let recoveredArray = [];
 
+
+
 async function fetchAPI() {
     const response = await fetch(api);
     const data = await response.json();
@@ -47,8 +49,8 @@ async function fetchAPI() {
 
     //loop through all locations and get latest cases and countries
     for (let i = 0; i < loopLength; i++ ) {
-        let confirmedLatitude = data.confirmed.locations[i].coordinates.lat;
-        let confirmedLongitude = data.confirmed.locations[i].coordinates.long;
+        let confirmedLatitude = data.confirmed.locations[i].coordinates.lat,
+        confirmedLongitude = data.confirmed.locations[i].coordinates.long;
 
         let confirmedCountry = data.confirmed.locations[i].country,
             confirmedCasesPerCountry = data.confirmed.locations[i].latest,
@@ -66,23 +68,18 @@ async function fetchAPI() {
             value: confirmedCasesPerCountry,
             lat: confirmedLatitude,
             long: confirmedLongitude
-
         });
 
         deathArray.push( {
             country: deathCountry,
             province: province,
-            value: deathCasesPerCountry,
-            lat: confirmedLatitude,
-            long: confirmedLongitude
+            value: deathCasesPerCountry
         });
 
         recoveredArray.push( {
             country: recoveredCountry,
             province: province,
-            value: recoveredCasesPerCountry,
-            lati: confirmedLatitude,
-            longi: confirmedLongitude
+            value: recoveredCasesPerCountry
         });
     }
 
@@ -92,7 +89,7 @@ async function fetchAPI() {
     sortGreatestToLeast(recoveredArray);
 
     ////Create Map
-    var mymap = L.map('mapid').setView([14.97, -4.16], 2);
+    var mymap = L.map('mapid').setView([40.03, -99.20], 4);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -106,7 +103,6 @@ async function fetchAPI() {
 
     //creates div elements and prints sorted array of objects to divs
     for (let i = 0; i < loopLength; i++ ) {
-
         //declare confirmed case variables
         let confirmedCasesValue = addCommasToNumbers( confirmedArray[i].value ),
             confirmedCasesForMap = confirmedArray[i].value,
@@ -137,15 +133,19 @@ async function fetchAPI() {
                 fillOpacity: 0.3,
                 radius: 10000 + (confirmedCasesForMap * 30)
         }).addTo(mymap);
-    
+        
         //binds popups to circles saying the country and how many cases
-        if(confirmedProvince) {
+        if( confirmedProvince ) {
             circle.bindPopup(
-                `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue} <br> Recoveries: ${recoveredCasesValue}`
+                `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue}`
+            );
+        } else if (confirmedProvince && confirmedCountry === deathCountry ) {
+            circle.bindPopup(
+                `Province: ${confirmedProvince}, ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue}`
             );
         } else {
             circle.bindPopup(
-            `Country: ${confirmedCountry} <br> Cases: ${confirmedCasesValue} <br> Deaths: ${deathCasesValue} <br> Recoveries: ${recoveredCasesValue}`
+            `Country: ${confirmedCountry} <br> Cases: ${confirmedCasesValue}`
             );
         }
     }

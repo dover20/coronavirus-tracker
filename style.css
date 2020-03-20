@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body::webkit-scrollbar {
+    width: 11px;
+}
+
 body, html {
     background: black;
     color: white;
@@ -12,6 +16,13 @@ body, html {
     font-family: 'Raleway';
     color: rgb(168, 168, 168);
     font-size: 18px;
+    
+}
+
+body::web-scrollbar-thumb {
+    background-color: red;
+    border-radius: 6px;
+    border: 3px solid rgb(63, 95, 199);
 }
 
 .container {
@@ -117,6 +128,8 @@ a:hover {
 
 .lists {
     text-align: start;
+    scrollbar-color: rgb(90, 90, 90) grey;
+    scrollbar-width: thin;
     overflow: auto;
 }
 
@@ -152,7 +165,6 @@ a:hover {
     border-bottom: 1px solid rgb(204, 0, 0);
     font-size: 24px;
     text-align: center;
-    text-decoration: underline;
 }
 
 .divider {
