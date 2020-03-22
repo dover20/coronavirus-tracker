@@ -1,4 +1,6 @@
-Coronavirus Tracker. Technologies used: LeafletJS, Mapbox layers, RESTful API.
+Coronavirus Tracker. 
+
+Technologies used: CSS Grid, JavaScript, LeafletJS, Mapbox layers, and RESTful API.
 
 Website: https://dover20.github.io/coronavirus-tracker/
 
