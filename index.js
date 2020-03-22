@@ -62,6 +62,7 @@ async function fetchCountries() {
     
     let loopLength = data.length;
     
+    //copys array then sorts it, greatest to least
     deathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
     recoveredArray = data.concat().sort( (a,b) => b.recovered - a.recovered );
 
@@ -110,23 +111,22 @@ async function fetchCountries() {
 
             if (longitude && latitude) {
                 let circle = L.circle([longitude, latitude], {
-                    color: 'red',
-                    fillColor: '#f03',
+                    color: '#800000',
+                    fillColor: '#800000',
                     fillOpacity: 0.3,
-                    radius: 10000 + (cases * 30)
+                    radius: 20000 + (cases * 35)
                 }).addTo(mymap);
 
                 circle.bindPopup(
-                    `Country: ${country} <br>
+                    `Country: <span class="popupNumber">${country}</span> <br>
                     <br>
-                    Cases: ${addCommas(cases)} <br>
-                    Deaths: ${addCommas(deaths)} <br>
-                    <br>
-                    Active Cases: ${addCommas(active)} <br>
-                    Recovered: ${addCommas(recovered)} <br>
-                    Today's Cases: ${addCommas(todayCases)} <br>
-                    Today's Deaths: ${addCommas(todayDeaths)} <br>
-                    Critical condition: ${addCommas(critical)}`
+                    Cases: <span class="popupNumber">${addCommas(cases)}</span> <br>
+                    Deaths: <span class="popupNumber">${addCommas(deaths)}</span> <br>
+                    Active Cases: <span class="popupNumber">${addCommas(active)}</span> <br>
+                    Recovered: <span class="popupNumber">${addCommas(recovered)}</span> <br>
+                    Today's Cases: <span class="popupNumber">${addCommas(todayCases)}</span> <br>
+                    Today's Deaths: <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
+                    Critical condition: <span class="popupNumber">${addCommas(critical)}</span>`
                 );
             }
         }
@@ -134,9 +134,9 @@ async function fetchCountries() {
     }
 }
 
-function printToHTML(casesValue, country, countryList) {
+function printToHTML(value, country, countryList) {
     countryList.innerHTML = 
-        `<span class="redNumber">${addCommas(casesValue)}</span> ` + `<span class="countryColor">${country}</span>`;
+        `<span class="redNumber">${addCommas(value)}</span> ` + `<span class="countryColor">${country}</span>`;
         countryList.classList = "divider";
 }
 
