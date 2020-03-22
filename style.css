@@ -9,7 +9,7 @@ body::webkit-scrollbar {
 }
 
 body, html {
-    background: black;
+    background: rgb(7, 7, 7);
     color: white;
     height: 100vh;
     width: 100vw;
@@ -30,9 +30,9 @@ body::web-scrollbar-thumb {
     height: 100vh;
     width: 100vw;
     justify-self: center;
-    grid-gap: 15px;
+    grid-gap: 10px;
     grid-template-columns: 1fr 3fr 1fr 1fr;
-    grid-template-rows: 40px 150px auto 60px;
+    grid-template-rows: 40px 150px auto 100px;
     grid-template-areas: 
     "header header header header"
     "box1 box2 box3 box4"
@@ -76,6 +76,24 @@ body::web-scrollbar-thumb {
 
 .box5 {
     grid-area: box5;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox"
+    "listBox";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox {
+    grid-area: headerBox;
+}
+
+.listBox {
+    grid-area: listBox;
+    overflow: auto;
 }
 
 .box5 > div {
@@ -84,6 +102,24 @@ body::web-scrollbar-thumb {
 
 .box6 {
     grid-area: box6;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox2"
+    "listBox2";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox2 {
+    grid-area: headerBox2;
+}
+
+.listBox2 {
+    grid-area: listBox2;
+    overflow: auto;
 }
 
 .box6 > div {
@@ -92,6 +128,24 @@ body::web-scrollbar-thumb {
 
 .box7 {
     grid-area: box7;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox3"
+    "listBox3";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox3 {
+    grid-area: headerBox3;
+}
+
+.listBox3 {
+    grid-area: listBox3;
+    overflow: auto;
 }
 
 .box7 > div {
@@ -125,13 +179,6 @@ a:hover {
     color: rgb(61, 108, 236);
 }
 
-.lists {
-    text-align: start;
-    scrollbar-color: rgb(90, 90, 90) grey;
-    scrollbar-width: thin;
-    overflow: auto;
-}
-
 .centered {
     position: absolute;
     width: 100%;
@@ -139,9 +186,17 @@ a:hover {
     transform: translate(-50%,-50%);
 }
 
+.box9Totals {
+    font-size: 24px;
+}
+
+.addPadding {
+    padding: 10px;
+}
+
 .redNumber {
     color: rgb(255, 0, 0);
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .bigRedNumber {
@@ -166,6 +221,11 @@ a:hover {
     text-align: center;
 }
 
+.thinScrollbar {
+    scrollbar-color: rgb(90, 90, 90) grey;
+    scrollbar-width: thin;
+}
+
 .divider {
     font-weight: 400;
     border-bottom: solid 1px rgb(107, 107, 107);
@@ -187,7 +247,7 @@ a:hover {
 }
 
 .leaflet-popup-content-wrapper {
-    background: rgb(26, 26, 26);
+    background: rgb(19, 19, 19);
     color: rgb(224, 224, 224);
 }
 
@@ -201,6 +261,10 @@ a:hover {
     .box8 {
         font-size: 18px;
     }
+
+    .bigRedNumber, .bigGreenNumber {
+        font-size: 50px;
+    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -210,7 +274,7 @@ a:hover {
         width: 100vw;
         justify-self: center;
         grid-template-columns: 1fr;
-        grid-template-rows: 70px 85px 85px 85px 400px 240px 240px 240px 60px 55px 55px;
+        grid-template-rows: 80px 85px 85px 85px 400px 300px 300px 300px 60px 100px 65px;
         grid-template-areas:
         "header"
         "box1"
