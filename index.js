@@ -111,8 +111,8 @@ async function fetchCountries() {
 
             if (longitude && latitude) {
                 let circle = L.circle([longitude, latitude], {
-                    color: '#800000',
-                    fillColor: '#800000',
+                    color: 'rgb(195, 1, 1)',
+                    fillColor: 'rgb(216, 0, 0)',
                     fillOpacity: 0.3,
                     radius: 20000 + (cases * 35)
                 }).addTo(mymap);
@@ -122,8 +122,8 @@ async function fetchCountries() {
                     <br>
                     Cases: <span class="popupNumber">${addCommas(cases)}</span> <br>
                     Deaths: <span class="popupNumber">${addCommas(deaths)}</span> <br>
-                    Active Cases: <span class="popupNumber">${addCommas(active)}</span> <br>
                     Recovered: <span class="popupNumber">${addCommas(recovered)}</span> <br>
+                    Active Cases: <span class="popupNumber">${addCommas(active)}</span> <br>
                     Today's Cases: <span class="popupNumber">${addCommas(todayCases)}</span> <br>
                     Today's Deaths: <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
                     Critical condition: <span class="popupNumber">${addCommas(critical)}</span>`
