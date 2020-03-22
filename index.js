@@ -7,6 +7,9 @@ let casesListEl = document.querySelector('.casesList'),
 
 let deathArray = [];
 let recoveredArray = [];
+let criticalArray = [];
+let newCasesArray = [];
+let newDeathsArray = [];
 
 fetchLatestInfo();
 fetchCountries();
@@ -77,6 +80,10 @@ async function fetchCountries() {
             critical = data[i].critical,
             casesPerOneMillion = data[i].casesPerOneMillion;    
 
+        criticalArray.push(critical);
+        newCasesArray.push(todayCases);
+        newDeathsArray.push(todayDeaths);
+
         //Sorted deaths  
         let sortedDeaths = deathArray[i].deaths,
             sortedDeathsCountry = deathArray[i].country;
@@ -96,7 +103,7 @@ async function fetchCountries() {
         //write all lists to html
         casesListEl.appendChild(casesCountryList); 
         deathListEl.appendChild(deathsCountryList);
-        recoveryListEl.appendChild(recoveredCountryList);
+        recoveryListEl.appendChild(recoveredCountryList); 
 
         let apiGetCoordinates = `https://restcountries.eu/rest/v2/name/${country}`;
         
@@ -107,13 +114,11 @@ async function fetchCountries() {
             let longitude = data[0].latlng[0],
                 latitude = data[0].latlng[1];
 
-            console.log(longitude, latitude);
-
             if (longitude && latitude) {
                 let circle = L.circle([longitude, latitude], {
                     color: 'rgb(195, 1, 1)',
                     fillColor: 'rgb(216, 0, 0)',
-                    fillOpacity: 0.3,
+                    fillOpacity: 0.15,
                     radius: 20000 + (cases * 35)
                 }).addTo(mymap);
 
@@ -132,8 +137,19 @@ async function fetchCountries() {
         }
       fetchLatLongitude();
     }
+    
+    //Get the total number of critical cases
+    let totalCritical = sumOfArray(criticalArray);
+    document.querySelector('.critical').innerHTML = addCommas(totalCritical);
+
+    let totalNewCases = sumOfArray(newCasesArray);
+    document.querySelector('.totalNewCases').innerHTML = addCommas(totalNewCases);
+
+    let totalNewDeaths = sumOfArray(newDeathsArray);
+    document.querySelector('.totalNewDeaths').innerHTML = addCommas(totalNewDeaths);
 }
 
+//adds value and country to the lists
 function printToHTML(value, country, countryList) {
     countryList.innerHTML = 
         `<span class="redNumber">${addCommas(value)}</span> ` + `<span class="countryColor">${country}</span>`;
@@ -143,4 +159,9 @@ function printToHTML(value, country, countryList) {
 //adds commas every 3 digits
 function addCommas( x ) {
     return x.toLocaleString();
+}
+
+//gets the sum of all the items in the array
+function sumOfArray( x ) {
+    return x.reduce(function(acc, val) { return acc + val; }, 0);
 }
