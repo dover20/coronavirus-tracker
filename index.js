@@ -44,7 +44,7 @@ async function fetchLatestInfo() {
 }
 
 ////Create Map
-var mymap = L.map('mapid').setView([40.03, -99.20], 4);
+var mymap = L.map('mapid').setView([30.54, 4.58], 2);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
