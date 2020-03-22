@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <link rel="stylesheet" href="style.css">
+    <title>COVID-19 Case Tracker</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header boxes">
+            Coronavirus COVID-19 Global Outlook
+        </div>
+
+        <div class="box1 boxes">
+            <div class="centered">
+                Worldwide Confirmed Cases
+                <div id="totalConfirmed" class="bigRedNumber">loading...</div>
+            </div>
+        </div>
+
+        <div class="box2 boxes">
+            <div id="mapid"></div>
+        </div>
+
+        <div class="box3 boxes">
+            <div class="centered">
+                Total Deaths
+                <div id="totalDeaths" class="bigRedNumber">loading...</div>
+            </div>
+        </div>
+
+        <div class="box4 boxes">
+            <div class="centered">
+                Total Recovered
+                <div id="totalRecovered" class="bigGreenNumber">loading...</div>
+            </div>
+        </div>
+        
+        <div class="box5 boxes lists">
+            <div class="smallTitle">Cases by country</div>
+
+            <div class="casesList"></div>
+        </div>
+
+        <div class="box6 boxes lists">
+            <div class="smallTitle">Deaths by country</div>
+
+            <div class="deathList"></div>
+        </div>
+
+        <div class="box7 boxes lists">
+            <div class="smallTitle">Recoveries by country</div>
+
+            <div class="recoveryList"></div>
+        </div>
+
+        <div class="box8 boxes">
+            <div class="centered">
+                Last Updated: 
+                
+                <span id="lastUpdated"></span>
+            </div>
+        </div>
+
+        <div class="box9 boxes">
+            <div class="centered">
+                Map library used: <a href="https://leafletjs.com/">LeafletJS</a>
+                <br>
+                Map tiles used: <a href="https://www.mapbox.com/">Mapbox</a>
+            </div>
+        </div>
+
+        <div class="box10 boxes">
+            <div class="centered">
+                Github: <a href="https://github.com/dover20">dover20</a>
+                <br>
+                Data provided by 
+                <a href="https://github.com/ExpDev07/coronavirus-tracker-api">Coronavirus Tracker API</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+    <script src="index.js"></script>
+</body>
+</html>
