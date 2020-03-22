@@ -155,7 +155,7 @@ a:hover {
 }
 
 .countryColor {
-    color: rgb(255, 163, 163);
+    color: rgb(224, 224, 224);
 }
 
 .smallTitle {
@@ -178,6 +178,23 @@ a:hover {
 
 #lastUpdated {
     color: rgb(115, 145, 245);
+}
+
+.leaflet-container {
+    font-family: 'Raleway';
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.leaflet-popup-content-wrapper {
+    background: rgb(26, 26, 26);
+    color: rgb(224, 224, 224);
+}
+
+.popupNumber {
+    color: red;
+    font-size: 20px;
+    font-weight: 800;
 }
 
 @media only screen and (max-width: 1500px) {
