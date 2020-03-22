@@ -18,9 +18,9 @@
         </div>
 
         <div class="box1 boxes">
-            <div class="centered">
+            <div class="centered addPadding">
                 Worldwide Confirmed Cases
-                <div id="totalConfirmed" class="bigRedNumber">loading...</div>
+                <div id="totalConfirmed" class="bigRedNumber">...</div>
             </div>
         </div>
 
@@ -29,35 +29,35 @@
         </div>
 
         <div class="box3 boxes">
-            <div class="centered">
+            <div class="centered addPadding">
                 Total Deaths
-                <div id="totalDeaths" class="bigRedNumber">loading...</div>
+                <div id="totalDeaths" class="bigRedNumber">...</div>
             </div>
         </div>
 
         <div class="box4 boxes">
-            <div class="centered">
+            <div class="centered addPadding">
                 Total Recovered
-                <div id="totalRecovered" class="bigGreenNumber">loading...</div>
+                <div id="totalRecovered" class="bigGreenNumber">...</div>
             </div>
         </div>
         
-        <div class="box5 boxes lists">
-            <div class="smallTitle">Cases by country</div>
+        <div class="box5 boxes">
+            <div class="smallTitle headerBox">Cases by country</div>
 
-            <div class="casesList"></div>
+            <div class="casesList listBox thinScrollbar"></div>
         </div>
 
-        <div class="box6 boxes lists">
-            <div class="smallTitle">Deaths by country</div>
+        <div class="box6 boxes">
+            <div class="smallTitle headerBox2">Deaths by country</div>
 
-            <div class="deathList"></div>
-        </div>
+            <div class="deathList listBox2 thinScrollbar"></div>
+        </div> 
 
-        <div class="box7 boxes lists">
-            <div class="smallTitle">Recoveries by country</div>
+        <div class="box7 boxes">
+            <div class="smallTitle headerBox3">Recoveries by country</div>
 
-            <div class="recoveryList"></div>
+            <div class="recoveryList listBox3 thinScrollbar"></div>
         </div>
 
         <div class="box8 boxes">
@@ -69,16 +69,19 @@
         </div>
 
         <div class="box9 boxes">
-            <div class="centered">
-                Map library used: <a href="https://leafletjs.com/">LeafletJS</a>
-                <br>
-                Map tiles used: <a href="https://www.mapbox.com/">Mapbox</a>
+            <div class="centered box9Totals">
+                Total new cases today: 
+                <span class="totalNewCases redNumber"></span><br>
+                Total in critical condition:
+                <span class="critical redNumber"></span><br>
+                Total new deaths today: 
+                <span class="totalNewDeaths redNumber"></span>
             </div>
         </div>
 
         <div class="box10 boxes">
             <div class="centered">
-                Github: <a href="https://github.com/dover20">dover20</a>
+                GitHub: <a href="https://github.com/dover20">dover20</a>
                 <br>
                 Data provided by 
                 <a href="https://github.com/NovelCOVID/API">NovelCOVID API</a>
@@ -89,6 +92,6 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
-    <script src="index.js"></script>
+   <script src="index.js"></script>
 </body>
 </html>
