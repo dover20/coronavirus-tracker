@@ -1,18 +1,26 @@
 let latestSummary = "https://corona.lmao.ninja/all";
 let allCountries = "https://corona.lmao.ninja/countries";
+let allStates = "https://corona.lmao.ninja/states";
 
 let casesListEl = document.querySelector('.casesList'),
     deathListEl = document.querySelector('.deathList'),
-    recoveryListEl = document.querySelector('.recoveryList');
+    recoveryListEl = document.querySelector('.recoveryList'),
 
-let deathArray = [];
-let recoveredArray = [];
-let criticalArray = [];
-let newCasesArray = [];
-let newDeathsArray = [];
+    stateCasesListEl = document.querySelector('.stateCases'),
+    stateDeathsListEl = document.querySelector('.stateDeaths'),
+    casesTodayListEl = document.querySelector('.casesToday');
+
+let deathArray = [],
+    recoveredArray = [],
+    criticalArray = [],
+    newCasesArray = [],
+    newDeathsArray = [],
+    stateDeathsArray = [],
+    stateNewCasesArray = [];
 
 fetchLatestInfo();
 fetchCountries();
+fetchStates();
 
 async function fetchLatestInfo() {
     const response = await fetch(latestSummary);
@@ -70,6 +78,7 @@ async function fetchCountries() {
     recoveredArray = data.concat().sort( (a,b) => b.recovered - a.recovered );
 
     for (let i = 0; i < loopLength; i++) {
+
         let country = data[i].country,
             cases = data[i].cases,
             todayCases = data[i].todayCases,
@@ -149,6 +158,42 @@ async function fetchCountries() {
     document.querySelector('.totalNewDeaths').innerHTML = addCommas(totalNewDeaths);
 }
 
+async function fetchStates() {
+    const response = await fetch(allStates);
+    const data = await response.json();
+
+    let sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
+    let sortedNewCasesArray = data.concat().sort( (a,b) => b.todayCases - a.todayCases );
+
+    let loopLength = data.length;
+
+    for (let i = 0; i < loopLength; i++) {
+        
+        let state = data[i].state,
+            cases = data[i].cases,
+            deaths = data[i].deaths,
+            todayCases = data[i].todayCases;
+        
+        let deathState = sortedDeathArray[i].state,
+            sortedDeaths = sortedDeathArray[i].deaths;
+
+        let newCaseState = sortedNewCasesArray[i].state,
+            sortedNewCases = sortedNewCasesArray[i].todayCases;
+    
+        let createStateCase = document.createElement('div'),
+            createStateDeath = document.createElement('div'),
+            createStateNewCases = document.createElement('div');
+    
+        printToHTML(cases, state, createStateCase);
+        printToHTML(sortedDeaths, deathState, createStateDeath);
+        printToHTML(sortedNewCases, newCaseState, createStateNewCases);
+    
+        stateCasesListEl.appendChild(createStateCase);
+        stateDeathsListEl.appendChild(createStateDeath);
+        casesTodayListEl.appendChild(createStateNewCases);
+    }
+}
+
 //adds value and country to the lists
 function printToHTML(value, country, countryList) {
     countryList.innerHTML = 
@@ -161,7 +206,7 @@ function addCommas( x ) {
     return x.toLocaleString();
 }
 
-//gets the sum of all the items in the array
+//gets the sum of all the items in an array
 function sumOfArray( x ) {
     return x.reduce(function(acc, val) { return acc + val; }, 0);
 }
