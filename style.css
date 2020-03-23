@@ -107,7 +107,6 @@ body::web-scrollbar-thumb {
     grid-template-areas: 
     "headerBox2"
     "listBox2";
-    
     overflow: auto;
 }
 
@@ -222,7 +221,7 @@ body::web-scrollbar-thumb {
     grid-template-rows: 1fr;
     grid-template-areas: 
     "firstBox secondBox";
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .firstBox {
@@ -263,6 +262,10 @@ a:hover {
 
 .addPadding {
     padding: 10px;
+}
+
+.addPadding2 {
+    padding: 6px;
 }
 
 .redNumber {
@@ -358,6 +361,10 @@ a:hover {
     .box9Totals {
         font-size: 18px;
     }
+
+    .box12 {
+        font-size: 18px;
+    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -367,7 +374,7 @@ a:hover {
         width: 100vw;
         justify-self: center;
         grid-template-columns: 1fr;
-        grid-template-rows: 80px 85px 85px 85px 400px 300px 300px 300px 300px 300px 300px 100px 60px 65px;
+        grid-template-rows: 80px 85px 85px 85px 400px 300px 300px 300px 300px 300px 300px 180px 60px 65px;
         grid-template-areas:
         "header"
         "box1"
