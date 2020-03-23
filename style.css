@@ -272,7 +272,7 @@ a:hover {
 .smallTitle {
     height: auto;
     background: rgb(19, 19, 19);
-    border-bottom: 2px solid rgb(204, 0, 0);
+    border-bottom: 2px solid red;
     font-size: 24px;
     text-align: center;
     font-variant: small-caps;
@@ -322,6 +322,26 @@ a:hover {
 
     .bigRedNumber, .bigGreenNumber {
         font-size: 50px;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    .container {
+        grid-template-rows: 40px 100px auto auto 85px;
+        grid-gap: 7px;
+    }
+
+    .bigRedNumber, .bigGreenNumber {
+        font-size: 35px;
+    }
+
+    .smallTitle {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .box9Totals {
+        font-size: 18px;
     }
 }
 
