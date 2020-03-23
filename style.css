@@ -107,6 +107,7 @@ body::web-scrollbar-thumb {
     grid-template-areas: 
     "headerBox2"
     "listBox2";
+    
     overflow: auto;
 }
 
@@ -217,11 +218,14 @@ body::web-scrollbar-thumb {
     grid-area: box12;
     display: grid;
     text-align: center;
+    
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas: 
-    "firstBox secondBox";
+    "firstBox thirdBox"
+    "secondBox fourthBox";
     font-size: 22px;
+    grid-gap: 7px;
 }
 
 .firstBox {
@@ -234,10 +238,20 @@ body::web-scrollbar-thumb {
     position: relative;
 }
 
+.thirdBox {
+    grid-area: thirdBox;
+    position: relative;
+}
+
+.fourthBox {
+    grid-area: fourthBox;
+    position: relative;
+}
+
 .box13 {
     grid-area: box13;
     position: relative;
-    font-size: 18px;
+    font-size: 22px;
     color: rgb(168, 168, 168);
 }
 
