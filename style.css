@@ -32,12 +32,13 @@ body::web-scrollbar-thumb {
     justify-self: center;
     grid-gap: 10px;
     grid-template-columns: 1fr 3fr 1fr 1fr;
-    grid-template-rows: 40px 150px auto 100px;
+    grid-template-rows: 40px 150px auto auto 100px;
     grid-template-areas: 
     "header header header header"
     "box1 box2 box3 box4"
     "box5 box2 box6 box7"
-    "box8 box9 box10 box10";
+    "box8 box2 box9 box10"
+    "box11 box12 box13 box13";
     padding: 10px;
 }
 
@@ -50,6 +51,7 @@ body::web-scrollbar-thumb {
 .boxes {
     background: rgb(19, 19, 19);
     text-align: center;
+    border-radius: 10px;
 }
 
 .box1 {
@@ -96,10 +98,6 @@ body::web-scrollbar-thumb {
     overflow: auto;
 }
 
-.box5 > div {
-    padding: 20px;
-}
-
 .box6 {
     grid-area: box6;
     display: grid;
@@ -109,7 +107,7 @@ body::web-scrollbar-thumb {
     grid-template-areas: 
     "headerBox2"
     "listBox2";
-    height: auto;
+    
     overflow: auto;
 }
 
@@ -120,10 +118,6 @@ body::web-scrollbar-thumb {
 .listBox2 {
     grid-area: listBox2;
     overflow: auto;
-}
-
-.box6 > div {
-    padding: 20px;
 }
 
 .box7 {
@@ -148,24 +142,86 @@ body::web-scrollbar-thumb {
     overflow: auto;
 }
 
-.box7 > div {
-    padding: 20px;
-}
-
 .box8 {
     grid-area: box8;
-    position: relative;
-    font-size: 22px;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox4"
+    "listBox4";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox4 {
+    grid-area: headerBox4;
+}
+
+.listBox4 {
+    grid-area: listBox4;
+    overflow: auto;
 }
 
 .box9 {
     grid-area: box9;
-    position: relative;
-    font-size: 18px;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox5"
+    "listBox5";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox5 {
+    grid-area: headerBox5;
+}
+
+.listBox5 {
+    grid-area: listBox5;
+    overflow: auto;
 }
 
 .box10 {
     grid-area: box10;
+    display: grid;
+    text-align: start;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "headerBox6"
+    "listBox6";
+    height: auto;
+    overflow: auto;
+}
+
+.headerBox6 {
+    grid-area: headerBox6;
+}
+
+.listBox6 {
+    grid-area: listBox6;
+    overflow: auto;
+}
+
+.box11 {
+    grid-area: box11;
+    position: relative;
+    font-size: 22px;
+}
+
+.box12 {
+    grid-area: box12;
+    position: relative;
+    font-size: 18px;
+}
+
+.box13 {
+    grid-area: box13;
     position: relative;
     font-size: 18px;
     color: rgb(168, 168, 168);
@@ -214,11 +270,13 @@ a:hover {
 }
 
 .smallTitle {
-    height: 80px;
+    height: auto;
     background: rgb(19, 19, 19);
-    border-bottom: 1px solid rgb(204, 0, 0);
+    border-bottom: 2px solid rgb(204, 0, 0);
     font-size: 24px;
     text-align: center;
+    font-variant: small-caps;
+    padding: 10px;
 }
 
 .thinScrollbar {
@@ -258,7 +316,7 @@ a:hover {
 }
 
 @media only screen and (max-width: 1500px) {
-    .box8 {
+    .box11 {
         font-size: 18px;
     }
 
@@ -274,7 +332,7 @@ a:hover {
         width: 100vw;
         justify-self: center;
         grid-template-columns: 1fr;
-        grid-template-rows: 80px 85px 85px 85px 400px 300px 300px 300px 60px 100px 65px;
+        grid-template-rows: 80px 85px 85px 85px 400px 300px 300px 300px 300px 300px 300px 100px 60px 65px;
         grid-template-areas:
         "header"
         "box1"
@@ -286,7 +344,10 @@ a:hover {
         "box7"
         "box8"
         "box9"
-        "box10";
+        "box10"
+        "box12"
+        "box11"
+        "box13";
     }
 
     .bigRedNumber, .bigGreenNumber {
@@ -295,5 +356,10 @@ a:hover {
 
     #mapid {
         height: 100%;
+    }
+
+    .smallTitle {
+        font-size: 30px;
+        padding: 20px;
     }
 }
