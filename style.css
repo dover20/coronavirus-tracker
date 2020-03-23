@@ -216,8 +216,23 @@ body::web-scrollbar-thumb {
 
 .box12 {
     grid-area: box12;
-    position: relative;
+    display: grid;
+    text-align: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "firstBox secondBox";
     font-size: 18px;
+}
+
+.firstBox {
+    grid-area: firstBox;
+    position: relative;
+}
+
+.secondBox {
+    grid-area: secondBox;
+    position: relative;
 }
 
 .box13 {
