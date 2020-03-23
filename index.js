@@ -31,6 +31,8 @@ async function fetchLatestInfo() {
         totalRecoveries = data.recovered,
         latestUpdate = data.updated;
 
+    let fatalityPercentage = (totalDeaths / totalCases) * 100;
+
     //convert UTC date to a better formatted date
     let dateObj = new Date(latestUpdate);
     let options = {
@@ -52,6 +54,8 @@ async function fetchLatestInfo() {
     document.querySelector('#totalDeaths').innerHTML = addCommas( totalDeaths );
     document.querySelector('#totalRecovered').innerHTML = addCommas( totalRecoveries );
     document.querySelector('#lastUpdated').innerHTML += `${time} ` + formattedDate;
+
+    document.querySelector('.fatalityPercentage').innerHTML = fatalityPercentage.toFixed(2) + "%";
 }
 
 ////Create Map
@@ -86,8 +90,8 @@ async function fetchCountries() {
             todayDeaths = data[i].todayDeaths,
             recovered = data[i].recovered,
             active = data[i].active,
-            critical = data[i].critical,
-            casesPerOneMillion = data[i].casesPerOneMillion;    
+            critical = data[i].critical;
+            //casesPerOneMillion = data[i].casesPerOneMillion;  
 
         criticalArray.push(critical);
         newCasesArray.push(todayCases);
@@ -168,7 +172,7 @@ async function fetchStates() {
     let loopLength = data.length;
 
     for (let i = 0; i < loopLength; i++) {
-        
+
         let state = data[i].state,
             cases = data[i].cases,
             deaths = data[i].deaths,
