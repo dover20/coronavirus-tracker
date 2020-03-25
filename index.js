@@ -1,11 +1,10 @@
-let latestSummary = "https://corona.lmao.ninja/all";
-let allCountries = "https://corona.lmao.ninja/countries";
-let allStates = "https://corona.lmao.ninja/states";
+let latestSummary = "https://corona.lmao.ninja/all",
+    allCountries = "https://corona.lmao.ninja/countries",
+    allStates = "https://corona.lmao.ninja/states";
 
 let casesListEl = document.querySelector('.casesList'),
     deathListEl = document.querySelector('.deathList'),
     recoveryListEl = document.querySelector('.recoveryList'),
-
     stateCasesListEl = document.querySelector('.stateCases'),
     stateDeathsListEl = document.querySelector('.stateDeaths'),
     casesTodayListEl = document.querySelector('.casesToday');
@@ -52,12 +51,11 @@ async function fetchLatestInfo() {
     document.querySelector('#totalDeaths').innerHTML = addCommas( totalDeaths );
     document.querySelector('#totalRecovered').innerHTML = addCommas( totalRecoveries );
     document.querySelector('#lastUpdated').innerHTML += `${time} ` + formattedDate;
-
     document.querySelector('.fatalityPercentage').innerHTML = fatalityPercentage.toFixed(2) + "%";
 }
 
 ////Create Map
-var mymap = L.map('mapid').setView([30.54, 4.58], 2);
+var mymap = L.map('mapid').setView([39.12, -98.5], 2);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -165,35 +163,101 @@ async function fetchStates() {
     const data = await response.json();
 
     let sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
-    let sortedNewCasesArray = data.concat().sort( (a,b) => b.todayCases - a.todayCases );
 
     let loopLength = data.length;
 
     for (let i = 0; i < loopLength; i++) {
 
         let state = data[i].state,
-            cases = data[i].cases,
-            deaths = data[i].deaths,
-            todayCases = data[i].todayCases;
+            cases = data[i].cases;
         
         let deathState = sortedDeathArray[i].state,
             sortedDeaths = sortedDeathArray[i].deaths;
-
-        let newCaseState = sortedNewCasesArray[i].state,
-            sortedNewCases = sortedNewCasesArray[i].todayCases;
     
         let createStateCase = document.createElement('div'),
-            createStateDeath = document.createElement('div'),
-            createStateNewCases = document.createElement('div');
+            createStateDeath = document.createElement('div');
     
         printToHTML(cases, state, createStateCase);
         printToHTML(sortedDeaths, deathState, createStateDeath);
-        printToHTML(sortedNewCases, newCaseState, createStateNewCases);
     
         stateCasesListEl.appendChild(createStateCase);
         stateDeathsListEl.appendChild(createStateDeath);
-        casesTodayListEl.appendChild(createStateNewCases);
     }
+
+    async function fetchStateDeaths() {
+        const response = await fetch(allCountries);
+        const data = await response.json();
+
+        let leadingCausesOfDeath = [
+            {
+                disease: "Heart Disease",
+                cases: 1773
+            },
+            {
+                disease: "Cancer",
+                cases: 1641
+            },
+            {
+                disease: "Accidents (unintentional injuries)",
+                cases: 442
+            },
+            {
+                disease: "Chronic Lower Respiratory Disease",
+                cases: 439
+            },
+            {
+                disease: "Stroke",
+                cases: 401
+            },
+            {
+                disease: "Alzheimers",
+                cases: 333
+            },
+            {
+                disease: "COVID-19 Coronavirus",
+                cases: data[2].todayDeaths
+            },
+            {
+                disease: "Diabetes",
+                cases: 229
+            },
+            {
+                disease: "Flu and Pneumonia",
+                cases: 153
+            },
+            {
+                disease: "Kidney Disease",
+                cases: 139
+            },
+            {
+                disease: "Suicide",
+                cases: 129
+            },
+            {
+                disease: "Septicemia",
+                cases: "107"
+            },
+            {
+                disease: "Chronic liver disease and cirrhosis",
+                cases: "104"
+            }
+        ];
+
+        let sortedCauseOfDeathArray = leadingCausesOfDeath.concat().sort( (a,b) => b.cases - a.cases );
+    
+        let deathLoopLength = sortedCauseOfDeathArray.length;
+    
+        for (let i = 0; i < deathLoopLength; i++) {
+            let diseases = sortedCauseOfDeathArray[i].disease,
+                cases = sortedCauseOfDeathArray[i].cases;
+    
+            let diseaseElement = document.createElement('div');
+
+            printToHTML( cases, diseases, diseaseElement );
+            casesTodayListEl.appendChild(diseaseElement);
+        }
+    }
+    fetchStateDeaths();
 }
 
 //adds value and country to the lists
