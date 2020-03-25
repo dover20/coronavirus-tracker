@@ -96,6 +96,7 @@ body::web-scrollbar-thumb {
 .listBox {
     grid-area: listBox;
     overflow: auto;
+    background: rgb(12, 12, 12);
 }
 
 .box6 {
@@ -107,7 +108,6 @@ body::web-scrollbar-thumb {
     grid-template-areas: 
     "headerBox2"
     "listBox2";
-    
     overflow: auto;
 }
 
@@ -117,6 +117,7 @@ body::web-scrollbar-thumb {
 
 .listBox2 {
     grid-area: listBox2;
+    background: rgb(12, 12, 12);
     overflow: auto;
 }
 
@@ -129,7 +130,6 @@ body::web-scrollbar-thumb {
     grid-template-areas: 
     "headerBox3"
     "listBox3";
-    height: auto;
     overflow: auto;
 }
 
@@ -139,6 +139,7 @@ body::web-scrollbar-thumb {
 
 .listBox3 {
     grid-area: listBox3;
+    background: rgb(12, 12, 12);
     overflow: auto;
 }
 
@@ -161,6 +162,7 @@ body::web-scrollbar-thumb {
 
 .listBox4 {
     grid-area: listBox4;
+    background: rgb(12, 12, 12);
     overflow: auto;
 }
 
@@ -183,6 +185,7 @@ body::web-scrollbar-thumb {
 
 .listBox5 {
     grid-area: listBox5;
+    background: rgb(12, 12, 12);
     overflow: auto;
 }
 
@@ -205,6 +208,7 @@ body::web-scrollbar-thumb {
 
 .listBox6 {
     grid-area: listBox6;
+    background: rgb(12, 12, 12);
     overflow: auto;
 }
 
@@ -218,7 +222,6 @@ body::web-scrollbar-thumb {
     grid-area: box12;
     display: grid;
     text-align: center;
-    
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: 
@@ -304,7 +307,7 @@ a:hover {
 .smallTitle {
     height: auto;
     background: rgb(19, 19, 19);
-    border-bottom: 2px solid red;
+    border-bottom: 5px solid rgb(25, 52, 75);
     font-size: 24px;
     text-align: center;
     font-variant: small-caps;
@@ -347,13 +350,25 @@ a:hover {
     font-weight: 800;
 }
 
+
+@media only screen and (max-width: 1900px) {
+    .headerBox6 {
+        font-size: 18px;
+    }
+}
+
 @media only screen and (max-width: 1500px) {
-    .box11 {
+    .box11, .box13 {
         font-size: 18px;
     }
 
     .bigRedNumber, .bigGreenNumber {
         font-size: 50px;
+    }
+
+    .headerBox6 {
+        font-size: 16px;
+        font-weight: 900;
     }
 }
 
@@ -377,6 +392,10 @@ a:hover {
     }
 
     .box12 {
+        font-size: 18px;
+    }
+
+    .box13 {
         font-size: 18px;
     }
 }
@@ -417,5 +436,9 @@ a:hover {
     .smallTitle {
         font-size: 30px;
         padding: 20px;
+    }
+
+    .headerBox6 {
+        font-size: 24px;
     }
 }
