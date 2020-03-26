@@ -13,45 +13,49 @@ let deathArray = [],
     recoveredArray = [],
     criticalArray = [],
     newCasesArray = [],
-    newDeathsArray = [];
+    newDeathsArray = [],
+    casesByCountryArray = [],
+    totalNewDeathsTodayArray = [];
 
 fetchLatestInfo();
 fetchCountries();
 fetchStates();
 
-async function fetchLatestInfo() {
-    const response = await fetch(latestSummary);
-    const data = await response.json();
+function fetchLatestInfo() {
+    fetch(latestSummary).then(function(response) {
+        return response.json();
+    }).then(function(data) {
 
-    let totalCases = data.cases,
-        totalDeaths = data.deaths,
-        totalRecoveries = data.recovered,
-        latestUpdate = data.updated;
+        let totalCases = data.cases,
+            totalDeaths = data.deaths,
+            totalRecoveries = data.recovered,
+            latestUpdate = data.updated;
 
-    let fatalityPercentage = (totalDeaths / totalCases) * 100;
+        let fatalityPercentage = (totalDeaths / totalCases) * 100;
 
-    //convert UTC date to a better formatted date
-    let dateObj = new Date(latestUpdate);
-    let options = {
-        weekday: "long",
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-    };
+        //convert UTC date to a better formatted date
+        let dateObj = new Date(latestUpdate);
+        let options = {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        };
 
-    let time = dateObj.toLocaleTimeString('en', {
-        hour: "numeric", 
-        minute: "numeric"
+        let time = dateObj.toLocaleTimeString('en', {
+            hour: "numeric", 
+            minute: "numeric"
+        });
+
+        let formattedDate = dateObj.toLocaleDateString('en', options);
+        
+        //print numbers to HTML
+        document.querySelector('#totalConfirmed').innerHTML = addCommas( totalCases );
+        document.querySelector('#totalDeaths').innerHTML = addCommas( totalDeaths );
+        document.querySelector('#totalRecovered').innerHTML = addCommas( totalRecoveries );
+        document.querySelector('#lastUpdated').innerHTML += `${time} ` + formattedDate;
+        document.querySelector('.fatalityPercentage').innerHTML = fatalityPercentage.toFixed(2) + "%";
     });
-
-    let formattedDate = dateObj.toLocaleDateString('en', options);
-    
-    //print numbers to HTML
-    document.querySelector('#totalConfirmed').innerHTML = addCommas( totalCases );
-    document.querySelector('#totalDeaths').innerHTML = addCommas( totalDeaths );
-    document.querySelector('#totalRecovered').innerHTML = addCommas( totalRecoveries );
-    document.querySelector('#lastUpdated').innerHTML += `${time} ` + formattedDate;
-    document.querySelector('.fatalityPercentage').innerHTML = fatalityPercentage.toFixed(2) + "%";
 }
 
 ////Create Map
@@ -67,27 +71,29 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYmFjb25hdG9yNDUiLCJhIjoiY2s3eTV0aTRqMDNlZzNtbnMzajR0dDZiNyJ9.4rvhOofAx_ggGO7ZbxOuTQ'
 }).addTo(mymap);
 
-async function fetchCountries() {
-    const response = await fetch(allCountries);
-    const data = await response.json();
+function fetchCountries() {
+    fetch(allCountries)
+    .then(function(response){
+        return response.json();
+    }).then(function(data) {
     
     let loopLength = data.length;
     
     //copys array then sorts it, greatest to least
     deathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
     recoveredArray = data.concat().sort( (a,b) => b.recovered - a.recovered );
+    casesByCountryArray = data.concat().sort( (a,b) => b.cases - a.cases );
 
     for (let i = 0; i < loopLength; i++) {
 
-        let country = data[i].country,
-            cases = data[i].cases,
+        let country = casesByCountryArray[i].country,
+            cases = casesByCountryArray[i].cases,
             todayCases = data[i].todayCases,
             deaths = data[i].deaths,
             todayDeaths = data[i].todayDeaths,
             recovered = data[i].recovered,
             active = data[i].active,
             critical = data[i].critical;
-            //casesPerOneMillion = data[i].casesPerOneMillion;  
 
         criticalArray.push(critical);
         newCasesArray.push(todayCases);
@@ -116,9 +122,10 @@ async function fetchCountries() {
 
         let apiGetCoordinates = `https://restcountries.eu/rest/v2/name/${country}`;
         
-        async function fetchLatLongitude() {
-            const response = await fetch(apiGetCoordinates);
-            const data = await response.json();
+        function fetchLatLongitude() {
+            fetch(apiGetCoordinates).then(function(response) {
+                return response.json();
+            }).then(function(data) {
 
             let longitude = data[0].latlng[0],
                 latitude = data[0].latlng[1];
@@ -143,6 +150,7 @@ async function fetchCountries() {
                     Critical condition: <span class="popupNumber">${addCommas(critical)}</span>`
                 );
             }
+        });
         }
       fetchLatLongitude();
     }
@@ -156,108 +164,115 @@ async function fetchCountries() {
 
     let totalNewDeaths = sumOfArray(newDeathsArray);
     document.querySelector('.totalNewDeaths').innerHTML = addCommas(totalNewDeaths);
+});
 }
 
-async function fetchStates() {
-    const response = await fetch(allStates);
-    const data = await response.json();
+function fetchStates() {
+    fetch(allStates)
+    .then(function(response) {
+        return response.json();
+    }).then(function(data) {
 
-    let sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
+        let sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
 
-    let loopLength = data.length;
+        let loopLength = data.length;
 
-    for (let i = 0; i < loopLength; i++) {
+        for (let i = 0; i < loopLength; i++) {
 
-        let state = data[i].state,
-            cases = data[i].cases;
+            let state = data[i].state,
+                cases = data[i].cases;
+            
+            let deathState = sortedDeathArray[i].state,
+                sortedDeaths = sortedDeathArray[i].deaths;
         
-        let deathState = sortedDeathArray[i].state,
-            sortedDeaths = sortedDeathArray[i].deaths;
-    
-        let createStateCase = document.createElement('div'),
-            createStateDeath = document.createElement('div');
-    
-        printToHTML(cases, state, createStateCase);
-        printToHTML(sortedDeaths, deathState, createStateDeath);
-    
-        stateCasesListEl.appendChild(createStateCase);
-        stateDeathsListEl.appendChild(createStateDeath);
-    }
-
-    async function fetchStateDeaths() {
-        const response = await fetch(allCountries);
-        const data = await response.json();
-
-        let leadingCausesOfDeath = [
-            {
-                disease: "Heart Disease",
-                cases: 1773
-            },
-            {
-                disease: "Cancer",
-                cases: 1641
-            },
-            {
-                disease: "Accidents (unintentional injuries)",
-                cases: 442
-            },
-            {
-                disease: "Chronic Lower Respiratory Disease",
-                cases: 439
-            },
-            {
-                disease: "Stroke",
-                cases: 401
-            },
-            {
-                disease: "Alzheimers",
-                cases: 333
-            },
-            {
-                disease: "COVID-19 Coronavirus",
-                cases: data[2].todayDeaths
-            },
-            {
-                disease: "Diabetes",
-                cases: 229
-            },
-            {
-                disease: "Flu and Pneumonia",
-                cases: 153
-            },
-            {
-                disease: "Kidney Disease",
-                cases: 139
-            },
-            {
-                disease: "Suicide",
-                cases: 129
-            },
-            {
-                disease: "Septicemia",
-                cases: "107"
-            },
-            {
-                disease: "Chronic liver disease and cirrhosis",
-                cases: "104"
-            }
-        ];
-
-        let sortedCauseOfDeathArray = leadingCausesOfDeath.concat().sort( (a,b) => b.cases - a.cases );
-    
-        let deathLoopLength = sortedCauseOfDeathArray.length;
-    
-        for (let i = 0; i < deathLoopLength; i++) {
-            let diseases = sortedCauseOfDeathArray[i].disease,
-                cases = sortedCauseOfDeathArray[i].cases;
-    
-            let diseaseElement = document.createElement('div');
-
-            printToHTML( cases, diseases, diseaseElement );
-            casesTodayListEl.appendChild(diseaseElement);
+            let createStateCase = document.createElement('div'),
+                createStateDeath = document.createElement('div');
+        
+            printToHTML(cases, state, createStateCase);
+            printToHTML(sortedDeaths, deathState, createStateDeath);
+        
+            stateCasesListEl.appendChild(createStateCase);
+            stateDeathsListEl.appendChild(createStateDeath);
         }
-    }
-    fetchStateDeaths();
+
+        function fetchStateDeaths() {
+            fetch(allCountries)
+            .then(function(response) {
+                return response.json();
+            }).then(function(data) {
+
+                let leadingCausesOfDeath = [
+                    {
+                        disease: "Heart Disease",
+                        cases: 1773
+                    },
+                    {
+                        disease: "Cancer",
+                        cases: 1641
+                    },
+                    {
+                        disease: "Accidents (unintentional injuries)",
+                        cases: 442
+                    },
+                    {
+                        disease: "Chronic Lower Respiratory Disease",
+                        cases: 439
+                    },
+                    {
+                        disease: "Stroke",
+                        cases: 401
+                    },
+                    {
+                        disease: "Alzheimers",
+                        cases: 333
+                    },
+                    {
+                        disease: "COVID-19 Coronavirus",
+                        cases: data[1].todayDeaths
+                    },
+                    {
+                        disease: "Diabetes",
+                        cases: 229
+                    },
+                    {
+                        disease: "Flu and Pneumonia",
+                        cases: 153
+                    },
+                    {
+                        disease: "Kidney Disease",
+                        cases: 139
+                    },
+                    {
+                        disease: "Suicide",
+                        cases: 129
+                    },
+                    {
+                        disease: "Septicemia",
+                        cases: "107"
+                    },
+                    {
+                        disease: "Chronic liver disease and cirrhosis",
+                        cases: "104"
+                    }
+                ];
+
+                let sortedCauseOfDeathArray = leadingCausesOfDeath.concat().sort( (a,b) => b.cases - a.cases );
+            
+                let deathLoopLength = sortedCauseOfDeathArray.length;
+            
+                for (let i = 0; i < deathLoopLength; i++) {
+                    let diseases = sortedCauseOfDeathArray[i].disease,
+                        cases = sortedCauseOfDeathArray[i].cases;
+            
+                    let diseaseElement = document.createElement('div');
+
+                    printToHTML( cases, diseases, diseaseElement );
+                    casesTodayListEl.appendChild(diseaseElement);
+                }
+            });
+        }
+      fetchStateDeaths();
+    });
 }
 
 //adds value and country to the lists
