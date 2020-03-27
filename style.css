@@ -49,6 +49,7 @@ body::web-scrollbar-thumb {
 }
 
 .boxes {
+    color: rgb(238, 238, 238);
     background: rgb(19, 19, 19);
     text-align: center;
     border-radius: 10px;
@@ -255,7 +256,6 @@ body::web-scrollbar-thumb {
     grid-area: box13;
     position: relative;
     font-size: 22px;
-    color: rgb(168, 168, 168);
 }
 
 a {
@@ -325,7 +325,7 @@ a:hover {
     margin-bottom: 4px;
 }
 
-#mapid { 
+#mapid {
     height: 100%;
 }
 
@@ -334,6 +334,8 @@ a:hover {
 }
 
 .leaflet-container {
+    background: rgb(7, 7, 7);
+    color: white;
     font-family: 'Raleway';
     font-size: 15px;
     font-weight: 600;
@@ -344,10 +346,40 @@ a:hover {
     color: rgb(224, 224, 224);
 }
 
+.leaflet-container a {
+    color: rgb(43, 106, 148);
+}
+
+.leaflet-control-attribution, .leaflet-control {
+    color: white;
+}
+
+.leaflet-container .leaflet-control-attribution {
+    background: rgb(7, 7, 7);
+}
+
+.leaflet-bar a {
+    border-bottom: 1px solid rgb(43, 106, 148);
+}
+
+.leaflet-bar a, .leaflet-bar a.leaflet-disabled {
+    background: rgb(39, 39, 39);
+}
+
 .popupNumber {
     color: red;
     font-size: 20px;
     font-weight: 800;
+}
+
+::selection {
+    background: rgb(25, 52, 75);
+    color: white;
+}
+
+::-moz-selection {
+    background: rgb(25, 52, 75);
+    color: white;
 }
 
 
