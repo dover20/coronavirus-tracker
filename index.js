@@ -15,8 +15,8 @@ let deathArray = [],
     newCasesArray = [],
     newDeathsArray = [],
     casesByCountryArray = [],
-    totalNewDeathsTodayArray = [];
-
+    sortedStateCases = [];
+    
 fetchLatestInfo();
 fetchCountries();
 fetchStates();
@@ -32,7 +32,7 @@ function fetchLatestInfo() {
             latestUpdate = data.updated;
 
         let fatalityPercentage = (totalDeaths / totalCases) * 100;
-
+        
         //convert UTC date to a better formatted date
         let dateObj = new Date(latestUpdate);
         let options = {
@@ -59,11 +59,10 @@ function fetchLatestInfo() {
 }
 
 ////Create Map
-var mymap = L.map('mapid').setView([39.12, -98.5], 2);
+var mymap = L.map('mapid').setView([31.749, 0.335], 2);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    
     minZoom: 2,
     id: 'baconator45/ck7y95u8o0n5u1iqdpws3vyyo',
     tileSize: 512,
@@ -79,15 +78,17 @@ function fetchCountries() {
     
     let loopLength = data.length;
     
-    //copys array then sorts it, greatest to least
+    //concatenates array then sorts it, greatest to least
     deathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
     recoveredArray = data.concat().sort( (a,b) => b.recovered - a.recovered );
     casesByCountryArray = data.concat().sort( (a,b) => b.cases - a.cases );
 
     for (let i = 0; i < loopLength; i++) {
 
-        let country = casesByCountryArray[i].country,
-            cases = casesByCountryArray[i].cases,
+        let countrySortedList = casesByCountryArray[i].country,
+            casesSortedList = casesByCountryArray[i].cases,
+            country = data[i].country,
+            cases = data[i].cases,
             todayCases = data[i].todayCases,
             deaths = data[i].deaths,
             todayDeaths = data[i].todayDeaths,
@@ -111,14 +112,9 @@ function fetchCountries() {
             deathsCountryList = document.createElement("div"),
             recoveredCountryList = document.createElement("div");
 
-        printToHTML(cases, country, casesCountryList);
-        printToHTML(sortedDeaths, sortedDeathsCountry, deathsCountryList);
-        printToHTML(sortedRecoveries, sortedRecoveriesCountry, recoveredCountryList);
-    
-        //write all lists to html
-        casesListEl.appendChild(casesCountryList); 
-        deathListEl.appendChild(deathsCountryList);
-        recoveryListEl.appendChild(recoveredCountryList); 
+        printToHTML(casesSortedList, countrySortedList, casesCountryList, casesListEl);
+        printToHTML(sortedDeaths, sortedDeathsCountry, deathsCountryList, deathListEl);
+        printToHTML(sortedRecoveries, sortedRecoveriesCountry, recoveredCountryList, recoveryListEl);
 
         let apiGetCoordinates = `https://restcountries.eu/rest/v2/name/${country}`;
         
@@ -135,7 +131,7 @@ function fetchCountries() {
                     color: 'rgb(195, 1, 1)',
                     fillColor: 'rgb(216, 0, 0)',
                     fillOpacity: 0.15,
-                    radius: 20000 + (cases * 35)
+                    radius: cases * 25
                 }).addTo(mymap);
 
                 circle.bindPopup(
@@ -164,7 +160,7 @@ function fetchCountries() {
 
     let totalNewDeaths = sumOfArray(newDeathsArray);
     document.querySelector('.totalNewDeaths').innerHTML = addCommas(totalNewDeaths);
-});
+    });
 }
 
 function fetchStates() {
@@ -173,14 +169,15 @@ function fetchStates() {
         return response.json();
     }).then(function(data) {
 
-        let sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
+        sortedDeathArray = data.concat().sort( (a,b) => b.deaths - a.deaths );
+        sortedStateCases = data.concat().sort( (a,b) => b.cases - a.cases );
 
         let loopLength = data.length;
 
         for (let i = 0; i < loopLength; i++) {
 
-            let state = data[i].state,
-                cases = data[i].cases;
+            let state = sortedStateCases[i].state,
+                cases = sortedStateCases[i].cases;
             
             let deathState = sortedDeathArray[i].state,
                 sortedDeaths = sortedDeathArray[i].deaths;
@@ -188,11 +185,8 @@ function fetchStates() {
             let createStateCase = document.createElement('div'),
                 createStateDeath = document.createElement('div');
         
-            printToHTML(cases, state, createStateCase);
-            printToHTML(sortedDeaths, deathState, createStateDeath);
-        
-            stateCasesListEl.appendChild(createStateCase);
-            stateDeathsListEl.appendChild(createStateDeath);
+            printToHTML(cases, state, createStateCase, stateCasesListEl);
+            printToHTML(sortedDeaths, deathState, createStateDeath, stateDeathsListEl);
         }
 
         function fetchStateDeaths() {
@@ -200,6 +194,14 @@ function fetchStates() {
             .then(function(response) {
                 return response.json();
             }).then(function(data) {
+                let covidCases;
+                let usaDeathsToday = data[1].todayDeaths;
+
+                if (usaDeathsToday < 267) {
+                    covidCases = 266;
+                } else {
+                    covidCases = data[1].todayDeaths;
+                }
 
                 let leadingCausesOfDeath = [
                     {
@@ -228,7 +230,7 @@ function fetchStates() {
                     },
                     {
                         disease: "COVID-19 Coronavirus",
-                        cases: data[1].todayDeaths
+                        cases: covidCases
                     },
                     {
                         disease: "Diabetes",
@@ -248,26 +250,25 @@ function fetchStates() {
                     },
                     {
                         disease: "Septicemia",
-                        cases: "107"
+                        cases: 107
                     },
                     {
                         disease: "Chronic liver disease and cirrhosis",
-                        cases: "104"
+                        cases: 104
                     }
                 ];
 
                 let sortedCauseOfDeathArray = leadingCausesOfDeath.concat().sort( (a,b) => b.cases - a.cases );
             
-                let deathLoopLength = sortedCauseOfDeathArray.length;
+                let loopLength = sortedCauseOfDeathArray.length;
             
-                for (let i = 0; i < deathLoopLength; i++) {
+                for (let i = 0; i < loopLength; i++) {
                     let diseases = sortedCauseOfDeathArray[i].disease,
                         cases = sortedCauseOfDeathArray[i].cases;
             
                     let diseaseElement = document.createElement('div');
 
-                    printToHTML( cases, diseases, diseaseElement );
-                    casesTodayListEl.appendChild(diseaseElement);
+                    printToHTML( cases, diseases, diseaseElement, casesTodayListEl );
                 }
             });
         }
@@ -276,10 +277,11 @@ function fetchStates() {
 }
 
 //adds value and country to the lists
-function printToHTML(value, country, countryList) {
-    countryList.innerHTML = 
-        `<span class="redNumber">${addCommas(value)}</span> ` + `<span class="countryColor">${country}</span>`;
-        countryList.classList = "divider";
+function printToHTML(redValue, country, elementToModify, elementToAppend) {
+    elementToModify.innerHTML = 
+        `<span class="redNumber">${addCommas(redValue)}</span> ` + country;
+    elementToModify.classList = "divider";
+    elementToAppend.appendChild(elementToModify);
 }
 
 //adds commas every 3 digits
