@@ -131,7 +131,7 @@ function fetchCountries() {
                     color: 'rgb(195, 1, 1)',
                     fillColor: 'rgb(216, 0, 0)',
                     fillOpacity: 0.15,
-                    radius: cases * 25
+                    radius: (cases * 12.5)
                 }).addTo(mymap);
 
                 circle.bindPopup(
