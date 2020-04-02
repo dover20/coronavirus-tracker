@@ -197,8 +197,8 @@ function fetchStates() {
                 let covidCases;
                 let usaDeathsToday = data[1].todayDeaths;
 
-                if (usaDeathsToday < 267) {
-                    covidCases = 266;
+                if (usaDeathsToday < 805) {
+                    covidCases = 805;
                 } else {
                     covidCases = data[0].todayDeaths;
                 }
