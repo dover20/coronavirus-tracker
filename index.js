@@ -195,12 +195,12 @@ function fetchStates() {
                 return response.json();
             }).then(function(data) {
                 let covidCases;
-                let usaDeathsToday = data[1].todayDeaths;
+                let usaDeathsToday = data[0].todayDeaths;
 
                 if (usaDeathsToday < 805) {
                     covidCases = 805;
                 } else {
-                    covidCases = data[0].todayDeaths;
+                    covidCases = usaDeathsToday;
                 }
 
                 let leadingCausesOfDeath = [
