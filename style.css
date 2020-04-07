@@ -366,6 +366,10 @@ a:hover {
     background: rgb(39, 39, 39);
 }
 
+.leaflet-popup-content {
+    margin: 5px;
+}
+
 .popupNumber {
     color: red;
     font-size: 22px;
