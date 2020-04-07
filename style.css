@@ -233,7 +233,7 @@ body::web-scrollbar-thumb {
 }
 
 .firstBox {
-    grid-area: firstBox;rgb(255, 224, 204)
+    grid-area: firstBox;
     position: relative;
 }
 
@@ -242,7 +242,7 @@ body::web-scrollbar-thumb {
     position: relative;
 }
 
-.thirdBox {rgb(255, 224, 204)
+.thirdBox {
     grid-area: thirdBox;
     position: relative;
 }
@@ -255,7 +255,7 @@ body::web-scrollbar-thumb {
 .box13 {
     grid-area: box13;
     position: relative;
-    font-size: 22px;rgb(255, 224, 204)
+    font-size: 22px;
 }
 
 a {
