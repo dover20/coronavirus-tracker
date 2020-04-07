@@ -146,7 +146,7 @@ function fetchCountries() {
                 Cases per million: <span class="popupNumber">${addCommas(casesPerMillion)}</span> <br>
                 <span class="highlight">Deaths per million: </span><span class="popupNumber">${addCommas(deathsPerMillion)}</span> <br>
                 Total tests: <span class="popupNumber">${addCommas(tests)}</span> <br>
-                Tests per million: <span class="popupSmallNum">${addCommas(testsPerMillion)}</span> <br>
+                Tests per million: <span class="popupNumber">${addCommas(testsPerMillion)}</span> <br>
                 <span class="popupNumber">${percentOfCasesPositive.toFixed(2) + "%"}</span> tested positive.`
             );
         }
