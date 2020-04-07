@@ -373,8 +373,9 @@ a:hover {
 }
 
 .highlight {
-    font-size: 18px;
-    color: rgb(255, 224, 204);
+    font-size: 16px;
+    font-decoration: underline;
+    
 }
 
 ::selection {
