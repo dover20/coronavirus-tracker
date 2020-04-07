@@ -143,10 +143,10 @@ function fetchCountries() {
                 <span class="highlight">Today's Cases:</span> <span class="popupNumber">${addCommas(todayCases)}</span> <br>
                 <span class="highlight">Today's Deaths:</span> <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
                 Critical condition:<span class="popupNumber"> ${addCommas(critical)}</span> <br>
-                Cases per million:<span class="popupNumber"> ${addCommas(casesPerMillion)}</span> <br>
+                Cases per one million:<span class="popupNumber"> ${addCommas(casesPerMillion)}</span> <br>
                 <span class="highlight">Deaths per million:</span> <span class="popupNumber">${addCommas(deathsPerMillion)}</span> <br>
-                Total tests: <span class="popupNumber">${addCommas(tests)}</span> <br>
-                Tests per million: <span class="popupNumber">${addCommas(testsPerMillion)}</span> <br>
+                People tested: <span class="popupNumber">${addCommas(tests)}</span> <br>
+                Tests per one million: <span class="popupNumber">${addCommas(testsPerMillion)}</span> <br>
                 <span class="popupNumber">${percentOfCasesPositive.toFixed(2) + "%"}</span> tested positive.`
             );
         }
