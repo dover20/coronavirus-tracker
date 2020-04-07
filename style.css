@@ -233,7 +233,7 @@ body::web-scrollbar-thumb {
 }
 
 .firstBox {
-    grid-area: firstBox;
+    grid-area: firstBox;rgb(255, 224, 204)
     position: relative;
 }
 
@@ -242,7 +242,7 @@ body::web-scrollbar-thumb {
     position: relative;
 }
 
-.thirdBox {
+.thirdBox {rgb(255, 224, 204)
     grid-area: thirdBox;
     position: relative;
 }
@@ -255,7 +255,7 @@ body::web-scrollbar-thumb {
 .box13 {
     grid-area: box13;
     position: relative;
-    font-size: 22px;
+    font-size: 22px;rgb(255, 224, 204)
 }
 
 a {
@@ -264,7 +264,7 @@ a {
 
 a:hover {
     color: rgb(61, 108, 236);
-}
+}rgb(255, 224, 204)
 
 .centered {
     position: absolute;
@@ -279,7 +279,7 @@ a:hover {
 
 .addPadding {
     padding: 10px;
-}rgb(255, 224, 204)
+}
 
 .addPadding2 {
     padding: 6px;
@@ -288,7 +288,7 @@ a:hover {
 .redNumber {
     color: rgb(255, 0, 0);
     font-size: 24px;
-}
+}rgb(255, 224, 204)
 
 .bigRedNumber {
     font-size: 65px;
