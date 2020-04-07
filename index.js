@@ -136,16 +136,16 @@ function fetchCountries() {
                 `
                 Country: <span class="popupNumber">${country}</span> <br>
                 <br>
-                Cases: <span class="popupNumber">${addCommas(cases)}</span> <br>
-                Deaths: <span class="popupNumber">${addCommas(deaths)}</span> <br>
-                Recovered: <span class="popupSmallNum">${addCommas(recovered)}</span> <br>
-                Active Cases: <span class="popupSmallNum">${addCommas(active)}</span> <br>
-                Today's Cases: <span class="popupSmallNum">${addCommas(todayCases)}</span> <br>
-                Today's Deaths: <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
+                <span class="highlight">Cases: </span><span class="popupNumber">${addCommas(cases)}</span> <br>
+                <span class="highlight">Deaths: </span><span class="popupNumber">${addCommas(deaths)}</span> <br>
+                Recovered: <span class="popupNumber">${addCommas(recovered)}</span> <br>
+                Active Cases: <span class="popupNumber">${addCommas(active)}</span> <br>
+                <span class="highlight">Today's Cases: </span><span class="popupNumber">${addCommas(todayCases)}</span> <br>
+                <span class="highlight">Today's Deaths: </span><span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
                 Critical condition: <span class="popupNumber">${addCommas(critical)}</span> <br>
-                Cases per million: <span class="popupSmallNum">${addCommas(casesPerMillion)}</span> <br>
-                Deaths per million: <span class="popupSmallNum">${addCommas(deathsPerMillion)}</span> <br>
-                Total tests: <span class="popupSmallNum">${addCommas(tests)}</span> <br>
+                Cases per million: <span class="popupNumber">${addCommas(casesPerMillion)}</span> <br>
+                <span class="highlight">Deaths per million: </span><span class="popupNumber">${addCommas(deathsPerMillion)}</span> <br>
+                Total tests: <span class="popupNumber">${addCommas(tests)}</span> <br>
                 Tests per million: <span class="popupSmallNum">${addCommas(testsPerMillion)}</span> <br>
                 <span class="popupNumber">${percentOfCasesPositive.toFixed(2) + "%"}</span> tested positive.`
             );
