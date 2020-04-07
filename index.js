@@ -94,7 +94,15 @@ function fetchCountries() {
             todayDeaths = data[i].todayDeaths,
             recovered = data[i].recovered,
             active = data[i].active,
-            critical = data[i].critical;
+            critical = data[i].critical,
+            casesPerMillion = data[i].casesPerOneMillion,
+            deathsPerMillion = data[i].deathsPerOneMillion,
+            tests = data[i].tests,
+            testsPerMillion = data[i].testsPerOneMillion,
+            latitude = data[i].countryInfo.lat,
+            longitude = data[i].countryInfo.long;
+
+        let percentOfCasesPositive = (cases / tests) * 100;
 
         criticalArray.push(critical);
         newCasesArray.push(todayCases);
@@ -115,40 +123,33 @@ function fetchCountries() {
         printToHTML(casesSortedList, countrySortedList, casesCountryList, casesListEl);
         printToHTML(sortedDeaths, sortedDeathsCountry, deathsCountryList, deathListEl);
         printToHTML(sortedRecoveries, sortedRecoveriesCountry, recoveredCountryList, recoveryListEl);
-
-        let apiGetCoordinates = `https://restcountries.eu/rest/v2/name/${country}`;
         
-        function fetchLatLongitude() {
-            fetch(apiGetCoordinates).then(function(response) {
-                return response.json();
-            }).then(function(data) {
+        if (longitude && latitude) {
+            let circle = L.circle([latitude, longitude], {
+                color: 'rgb(195, 1, 1)',
+                fillColor: 'rgb(216, 0, 0)',
+                fillOpacity: 0.15,
+                radius: (cases * 12.5)
+            }).addTo(mymap);
 
-            let longitude = data[0].latlng[0],
-                latitude = data[0].latlng[1];
-
-            if (longitude && latitude) {
-                let circle = L.circle([longitude, latitude], {
-                    color: 'rgb(195, 1, 1)',
-                    fillColor: 'rgb(216, 0, 0)',
-                    fillOpacity: 0.15,
-                    radius: (cases * 12.5)
-                }).addTo(mymap);
-
-                circle.bindPopup(
-                    `Country: <span class="popupNumber">${country}</span> <br>
-                    <br>
-                    Cases: <span class="popupNumber">${addCommas(cases)}</span> <br>
-                    Deaths: <span class="popupNumber">${addCommas(deaths)}</span> <br>
-                    Recovered: <span class="popupNumber">${addCommas(recovered)}</span> <br>
-                    Active Cases: <span class="popupNumber">${addCommas(active)}</span> <br>
-                    Today's Cases: <span class="popupNumber">${addCommas(todayCases)}</span> <br>
-                    Today's Deaths: <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
-                    Critical condition: <span class="popupNumber">${addCommas(critical)}</span>`
-                );
-            }
-        });
+            circle.bindPopup(
+                `
+                Country: <span class="popupNumber">${country}</span> <br>
+                <br>
+                Cases: <span class="popupNumber">${addCommas(cases)}</span> <br>
+                Deaths: <span class="popupNumber">${addCommas(deaths)}</span> <br>
+                Recovered: <span class="popupSmallNum">${addCommas(recovered)}</span> <br>
+                Active Cases: <span class="popupSmallNum">${addCommas(active)}</span> <br>
+                Today's Cases: <span class="popupSmallNum">${addCommas(todayCases)}</span> <br>
+                Today's Deaths: <span class="popupNumber">${addCommas(todayDeaths)}</span> <br>
+                Critical condition: <span class="popupNumber">${addCommas(critical)}</span> <br>
+                Cases per million: <span class="popupSmallNum">${addCommas(casesPerMillion)}</span> <br>
+                Deaths per million: <span class="popupSmallNum">${addCommas(deathsPerMillion)}</span> <br>
+                Total tests: <span class="popupSmallNum">${addCommas(tests)}</span> <br>
+                Tests per million: <span class="popupSmallNum">${addCommas(testsPerMillion)}</span> <br>
+                <span class="popupNumber">${percentOfCasesPositive.toFixed(2) + "%"}</span> tested positive.`
+            );
         }
-      fetchLatLongitude();
     }
     
     //Get the total number of critical cases
@@ -197,8 +198,8 @@ function fetchStates() {
                 let covidCases;
                 let usaDeathsToday = data[0].todayDeaths;
 
-                if (usaDeathsToday < 1012) {
-                    covidCases = 1012;
+                if (usaDeathsToday < 1214) {
+                    covidCases = 1214;
                 } else {
                     covidCases = usaDeathsToday;
                 }

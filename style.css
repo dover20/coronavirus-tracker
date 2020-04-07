@@ -372,6 +372,11 @@ a:hover {
     font-weight: 800;
 }
 
+.popupSmallNum {
+    font-size: 18px;
+    color: rgb(255, 149, 149);
+}
+
 ::selection {
     background: rgb(25, 52, 75);
     color: white;
