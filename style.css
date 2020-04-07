@@ -279,7 +279,7 @@ a:hover {
 
 .addPadding {
     padding: 10px;
-}
+}rgb(255, 224, 204)
 
 .addPadding2 {
     padding: 6px;
@@ -368,13 +368,13 @@ a:hover {
 
 .popupNumber {
     color: red;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
 }
 
 .popupSmallNum {
     font-size: 18px;
-    color: rgb(255, 149, 149);
+    color: rgb(255, 224, 204);
 }
 
 ::selection {
