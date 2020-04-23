@@ -1,6 +1,6 @@
-let latestSummary = "https://corona.lmao.ninja/all",
-    allCountries = "https://corona.lmao.ninja/countries",
-    allStates = "https://corona.lmao.ninja/states";
+let latestSummary = "https://corona.lmao.ninja/v2/all",
+    allCountries = "https://corona.lmao.ninja/v2/countries",
+    allStates = "https://corona.lmao.ninja/v2/states";
 
 let casesListEl = document.querySelector('.casesList'),
     deathListEl = document.querySelector('.deathList'),
