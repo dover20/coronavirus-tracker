@@ -203,16 +203,13 @@ function fetchStates() {
                 return response.json();
             }).then(function(data) {
                 let covidCases;
-                console.log(data);
-                let usaDeathsToday = data[0].todayDeaths;
+                let usaDeathsToday = data[201].todayDeaths;
 
                 if (usaDeathsToday < 1214) {
                     covidCases = 1214;
                 } else {
                     covidCases = usaDeathsToday;
                 }
-                
-                console.log(usaDeathsToday, covidCases);
 
                 let leadingCausesOfDeath = [
                     {
