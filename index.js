@@ -210,6 +210,8 @@ function fetchStates() {
                 } else {
                     covidCases = usaDeathsToday;
                 }
+                
+                console.log(usaDeathsToday, covidCases);
 
                 let leadingCausesOfDeath = [
                     {
